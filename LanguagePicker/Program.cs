@@ -24,12 +24,15 @@ while (true)
     Console.WriteLine(language);
     Console.ForegroundColor = fg;
     Console.WriteLine();
-    Console.Write("Do you accept this language? [Y]es, [N]o: ");
-    if (Console.ReadKey().Key == ConsoleKey.Y)
+    Console.Write("Accept this language? [Y]es or [N]o? [Yes]: ");
+    var response = Console.ReadKey().Key;
+    switch (response)
     {
-        Console.WriteLine($"\nSelecting and removing {language} from future choices");
-        PreviousChoices.Add(language);
-        File.WriteAllText(PreviousChoiceFile, JsonSerializer.Serialize(PreviousChoices));
-        break;
+        case ConsoleKey.Y:
+        case ConsoleKey.Enter:
+            Console.WriteLine($"\nSelecting and removing {language} from future choices");
+            PreviousChoices.Add(language);
+            File.WriteAllText(PreviousChoiceFile, JsonSerializer.Serialize(PreviousChoices));
+            return;
     }
 }
